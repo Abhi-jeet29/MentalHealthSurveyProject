@@ -112,10 +112,10 @@ else:
 # Load Data & Model
 # =========================
     df = pd.read_csv("data\processed_dataset.csv")
-    treatment_model = joblib.load("models/clf1_pipeline.joblib")
+    treatment_model = joblib.load("models/clf_pipeline.joblib")
     st.cache_resource
     def load_model():
-        return joblib.load("models/ridge_model_pipeline_v2.joblib")
+        return joblib.load("models/reg_pipeline.joblib")
 
     model = load_model()
 
