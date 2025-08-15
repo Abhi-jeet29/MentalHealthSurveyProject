@@ -58,7 +58,7 @@ source env/bin/activate  # On Windows: env\Scripts\activate
 
 Install Dependencies:
 textpip install -r requirements.txt
-(If requirements.txt is not present, install core packages manually: pip install pandas numpy scikit-learn matplotlib seaborn plotly streamlit joblib.)
+( install core packages manually: pip install pandas numpy scikit-learn matplotlib seaborn plotly streamlit joblib.)
 Run Notebooks (Optional, for exploration/model training):
 
 Open in Jupyter: jupyter notebook or VS Code.
@@ -69,14 +69,10 @@ Run notebook/Classification.ipynb, notebook/03_Regression.ipynb, and notebook/03
 Run the Streamlit App:
 textstreamlit run app.py
 
-Access at http://localhost:8501.
-Features: Data exploration, model predictions (treatment, age, cluster), visualizations (e.g., PCA plots, confidence scores), persona-based recommendations.
-
-
 
 Model Usage
 
-Load models directly: e.g., model = joblib.load('models/clf1_pipeline.joblib') for predictions.
+Load models directly: e.g., model = joblib.load('models/clf1_pipeline.joblib') for classification predictions.
 Ensure input data matches processed format (numerical encodings).
 
 Troubleshooting
@@ -113,10 +109,8 @@ Confidence: Model confidence score (0-1) for cluster assignment.
 
 For full details, refer to EDA notebook or dataset CSVs.
 License
-MIT License. See LICENSE for details.
-Contact
+
+Contact:
 
 GitHub: Abhi-jeet29
 Email: guptabhijit.ag.1@gmail.com
-
-Contributions welcome! Feel free to open issues or PRs.3.8sHow can Grok help?
