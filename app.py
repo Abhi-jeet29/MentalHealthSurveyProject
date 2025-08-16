@@ -56,8 +56,7 @@ st.markdown(
 )
 
 
-# Set page config
-st.set_page_config(page_title="Mental Health Survey", layout="wide")
+
 
 # Initialize session state
 if "app_started" not in st.session_state:
@@ -73,46 +72,20 @@ def start_app():
 if "started" not in st.session_state:
     st.session_state.started = False
 
+
 if not st.session_state.started:
     # Landing page
     st.markdown("<h1 style='text-align: center;'>MentalHealthSurveyProject</h1>", unsafe_allow_html=True)
     if st.button("🚀 Start", use_container_width=True):
         st.session_state.started = True
-        # st.experimental_rerun()
-# if not st.session_state.app_started:
-#     st.markdown(
-#         """
-#         <style>
-#         .big-title {
-#             font-size: 60px;
-#             font-weight: bold;
-#             color: #6A0DAD; /* Violet */
-#             text-align: center;
-#             margin-top: 100px;
-#         }
-#         .start-btn {
-#             display: flex;
-#             justify-content: center;
-#             margin-top: 40px;
-#         }
-#         </style>
-#         """,
-#         unsafe_allow_html=True
-#     )
+       
 
-#     st.markdown('<div class="big-title">MentalHealthSurveyProject</div>', unsafe_allow_html=True)
-#     st.markdown('<div class="start-btn">', unsafe_allow_html=True)
-#     if st.button("🚀 Start", key="start_button", use_container_width=True):
-#         st.session_state.started = True
-#         st.experimental_rerun()
-#         #start_app()
-#     #st.markdown('</div>', unsafe_allow_html=True)
 else:
 # =========================
 # Load Data & Model
 # =========================
     df = pd.read_csv("data\processed_dataset.csv")
-    treatment_model = joblib.load("models/clf_pipeline.joblib")
+    treatment_model = joblib.load("models\clf_pipeline.joblib")
     st.cache_resource
     def load_model():
         return joblib.load("models/reg_pipeline.joblib")
@@ -465,16 +438,24 @@ else:
                 new_user_data[col] = st.text_input(col, "")
 
         if st.button("Predict Cluster"):
-            new_df = pd.DataFrame([new_user_data])
+            num_features = [
+        'self_employed','family_history','treatment','work_interfere','no_employees',
+        'remote_work','tech_company','leave','mental_vs_physical',
+        'workplace_support','health_interview','health_consequence','social_support'
+            ]
+
+            new_df = pd.DataFrame([new_user_data], columns=num_features)
             pred_cluster = pipeline.predict(new_df)[0]
             persona = cluster_df[cluster_df["Cluster"] == pred_cluster]["Cluster_Name"].iloc[0]
             st.success(f"Predicted Cluster: {pred_cluster} ({persona})")
             st.markdown(f"**Persona:** {persona_map.get(persona, 'No description available')}")
+
             recs = recommendations_map.get(persona, [])
             if recs:
                 st.write("**Recommended actions:**")
                 for i, rec in enumerate(recs, start=1):
                     st.write(f"{i}. {rec}")
+
                 st.markdown("""
                 <hr>
                 <p style='text-align: center; color: #888888; font-size: 14px;'>
@@ -493,27 +474,3 @@ else:
 
 
 
-# # =========================
-# # Cluster Visualization
-# # =========================
-# elif menu == "👥 Cluster Visualization":
-#     st.title("👥 Cluster Visualization")
-#     st.warning("Clustering visualization is under development.")
-
-# # =========================
-# # Data Summary & Recommendations
-# # =========================
-# elif menu == "📄 Data Summary & Recommendations":
-#     st.title("📄 Data Summary & Recommendations")
-#     st.dataframe(df.describe())
-#     st.info("Recommendations will be generated based on model insights.")
-
-# # =========================
-# # Footer
-# # =========================
-# st.markdown("""
-#     <hr>
-#     <p style='text-align: center; color: #888888; font-size: 14px;'>
-#     🚀 Built with ❤ using Streamlit | © 2025 Team Lancer
-#     </p>
-# """, unsafe_allow_html=True)
